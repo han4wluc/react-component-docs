@@ -1,16 +1,29 @@
 import {Command, flags} from '@oclif/command'
 
 // import fs from 'fs';
-import fs = require('fs')
-import generateCompsCode from './generateCompsCode';
+const fs = require('fs-extra')
 const { exec } = require('child_process');
 const { spawn } = require('child_process');
 
-require('babel-register')({
-  presets: ['es2015', 'stage-2', 'react'],
-  plugins: ['transform-decorators-legacy'],
-});
-require('babel-polyfill');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const webpackConfig = require(__dirname + '/../App/webpack.dev.config.js');
+
+webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin())
+
+const options = {
+  publicPath: webpackConfig.output.publicPath,
+  hot: true,
+  // inline: true,
+  // contentBase: 'www',
+  stats: { colors: true }
+};
+
+// require('babel-register')({
+//   presets: ['es2015', 'stage-2', 'react'],
+//   plugins: ['transform-decorators-legacy'],
+// });
+// require('babel-polyfill');
 
 const prettier = require('prettier');
 const prettierOptions = {
@@ -44,6 +57,8 @@ class ReactComponent extends Command {
 
   async run() {
 
+    const generateCompsCode =  require('./generateCompsCode').default;
+
     const {args, flags} = this.parse(ReactComponent)
 
     if(!fs.existsSync('componentDocs.json')){
@@ -54,50 +69,44 @@ class ReactComponent extends Command {
     try {
       config = JSON.parse(config);
     } catch(error) {
-      console.warn(error);
+      // console.warn(error);
     }
 
     this.log(config);
 
-    let outString = `import componentFunction from './componentFunction';\n`;
+    let outString = ``;
 
     config.routes.forEach((route: any)=>{
 
       let name = route.name;
 
       outString += generateCompsCode(route.path, name);
-      outString += `export const ${name}Comp = componentFunction(${name}, '${name}');`;
+      outString += `export const ${name}Comp = ['${name}', ${name}];`;
     })
 
     outString = prettier.format(outString, prettierOptions);
 
-    fs.writeFileSync(__dirname + '/../' + 'cache/comps.js', outString);
+    if(fs.existsSync(__dirname + '/../.cache')){
+      // console.warn('AAAA')
+      fs.readdirSync(__dirname + '/../.cache').forEach(function(file :any, index :any){
+        fs.unlinkSync(__dirname + '/../.cache/' + file);
+      });
+      fs.rmdirSync(__dirname + '/../.cache')
+    } 
+    // console.warn('BBBBB')
 
-    const child = spawn('webpack-dev-server', ['--config', __dirname + '/../src/webpack.dev.config.js', '--host', '0.0.0.0', '--hot']);
+    // fs.copySync(__dirname + '/../cache', __dirname + '/../.cache');
+    fs.mkdirSync(__dirname + '/../.cache');
+    fs.writeFileSync(__dirname + '/../.cache/comps.js', outString);
 
-    // use child.stdout.setEncoding('utf8'); if you want text chunks
-    child.stdout.on('data', (chunk:any) => {
-      console.log( `stderr: ${chunk}` );
-      // data from standard output is here as buffers
+    const server = new WebpackDevServer(webpack(webpackConfig), options);
+    server.listen(8080, 'localhost', function (err:any) {
+    if (err) {
+    console.log(err);
+      }
+    console.log('WebpackDevServer listening at localhost:', 8080);
     });
 
-    child.stderr.on( 'data', (data :any) => {
-        console.log( `stderr: ${data}` );
-    } );
-    // since these are streams, you can pipe them elsewhere
-    // child.stderr.pipe(dest);
-
-    child.on('close', (code:any) => {
-      console.log(`child process exited with code ${code}`);
-    });
-    // this.log(outString)
-
-
-    // const name = flags.name || 'world'
-    // this.log(`hello ${name} from ./src/commands/react-component.ts!`)
-    // if (args.file && flags.force) {
-    //   this.log(`you input --force and --file: ${args.file}`)
-    // }
   }
 }
 

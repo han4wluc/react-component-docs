@@ -1,7 +1,11 @@
 
 import fs = require('fs');
 
-
+require('babel-register')({
+  presets: ['es2015', 'stage-2', 'react'],
+  plugins: ['transform-decorators-legacy'],
+});
+require('babel-polyfill');
 
 const uniqueCompNames : string[] = [];
 
@@ -41,7 +45,7 @@ const generateCompsCode : Function = (path: string, name: string) => {
         components.push(out);
       }
     } catch (error) {
-      // console.warn(error)
+      console.warn('error', error)
     }
   });
   outString += `const ${name} =`;
