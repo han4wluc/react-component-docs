@@ -61,6 +61,9 @@ class ReactComponent extends Command {
 
     const {args, flags} = this.parse(ReactComponent)
 
+    console.warn('args', args);
+    const { file: customEntry } = args;
+
     if(!fs.existsSync('componentDocs.json')){
       this.log(`file componentDocs.json does not exists`)
       return;
@@ -73,6 +76,12 @@ class ReactComponent extends Command {
     }
 
     this.log(config);
+
+    if(customEntry && config.entry){
+      webpackConfig.entry.splice(webpackConfig.entry.length - 1);
+      console.warn('process.cwd() + config.entry', process.cwd() + '/' + config.entry)
+      webpackConfig.entry.push(process.cwd() + '/' + config.entry)
+    }
 
     let outString = ``;
 
