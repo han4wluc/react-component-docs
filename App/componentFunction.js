@@ -66,18 +66,20 @@ export default (name, cc) => {
         return c.fileName.toLowerCase().startsWith(search.toLowerCase());
       }).map((comp)=>{
         return (
-          <Text
-            style={{marginTop: 16, fontSize: 16}}
-            
-          >
-            <a style={{
-              color: comp.fileName == this.state.currentScollId ? 'rgba(0,0,0,.85)' : 'rgba(0,0,0,.75)',
-              fontWeight: comp.fileName == this.state.currentScollId ? 'bold' : undefined,
-              textDecoration: 'none'
-            }} href={'#'+comp.fileName}>
-              {comp.fileName}
-            </a>
-          </Text>
+          <a class="selectable" style={{
+            color: comp.fileName == this.state.currentScollId ? 'rgba(0,0,0,.85)' : 'rgba(0,0,0,.75)',
+            fontWeight: comp.fileName == this.state.currentScollId ? 'bold' : undefined,
+            textDecoration: 'none',
+            fontSize: 16,
+            width: 300,
+            // height: 38,
+            paddingTop: 12,
+            paddingBottom: 12,
+            paddingLeft:24,
+            paddingRight:24,
+          }} href={'#'+comp.fileName}>
+            {comp.fileName}
+          </a>
         )
       })
 
@@ -99,11 +101,11 @@ export default (name, cc) => {
               currentScollId: a.id
             })
           }}>
-            <View id={'top-menu'} style={{backgroundColor:'white',position:'fixed',left:0,width:300,bottom:0,top:0,padding:24,marginTop:0,overflow:'scroll',zIndex: -1}}>
+            <View id={'top-menu'} style={{backgroundColor:'white',position:'fixed',left:0,width:300,bottom:0,top:0,paddingTop:24,paddingBottom:24,marginTop:0,overflow:'scroll',zIndex: -1}}>
               
-              <View style={{width:300-48,height:1,backgroundColor:'#ccc',marginTop:8,marginBottom:8}}/>
+              <View style={{width:300-48,marginLeft: 24, height:1,backgroundColor:'#ccc',marginTop:8,marginBottom:8}}/>
 
-              <input style={{fontSize:16, marginTop: 24}} value={search} onChange={this._onChangeSearch} placeholder={'Search'} />
+              <input style={{fontSize:16, marginTop: 24, marginLeft:24,marginBottom:12,marginRight:24,}} value={search} onChange={this._onChangeSearch} placeholder={'Search'} />
               { compNames }
             </View>
           </Scrollspy>

@@ -50,16 +50,22 @@ class App extends Component {
         <NavLink
           key={i}
           style={{
-            marginRight: 24,
+            // marginRight: 24,
             textDecoration: 'none',
             color:'rgba(0,0,0,.75)',
-            fontSize: 20
+            fontSize: 20,
+            height: 50,
+            paddingLeft:12,
+            paddingRight:12,
+            display:'flex',
+            alignItems:'center',
+
           }}
           activeStyle={{
             color: 'rgba(0,0,0,.85)',
             fontWeight: 'bold',
           }}
-          class="nav-link"
+          class="selectable nav-link"
           to={'/'+routeName}
         >
           {Routes[routeName][0]}
@@ -74,7 +80,7 @@ class App extends Component {
       <Router>
         <div style={{}}>
           <div style={{
-            height: 50,
+            // height: 50,
             display: 'flex',
             alignItems:'center',
             zIndex: 10,
@@ -83,7 +89,7 @@ class App extends Component {
             // top:0,
             // left:0,
             // right:0,
-            paddingLeft: 24,
+            paddingLeft: 12,
             backgroundColor:'white',
             borderBottomWidth: 1,
             borderColor:'#ddd',
