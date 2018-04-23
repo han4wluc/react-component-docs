@@ -5,7 +5,9 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  NavLink,
+  Redirect
 } from 'react-router-dom';
 import { hot } from 'react-hot-loader'
 
@@ -24,23 +26,44 @@ class App extends Component {
     //   )
     // })
     const routes = Object.keys(Routes)
+    this.firstRoute = routes[0]
     this.routesroutes = [];
     for (let routeName in Routes){
       const [name, components] = Routes[routeName];
-      console.warn('name', name, components)
 
       const compoennt = componentFunction(name, components);
-      console.warn('compoennt', compoennt)
       this.routesroutes.push(
-        <Route key={routeName} path={'/'+routeName} component={compoennt} />
+        <Route
+          key={routeName}
+          path={'/'+routeName}
+          component={compoennt}
+        />
       )
     }
+    // this.routesroutes.push(
+    //   <Route component={NotFound} />
+    // )
 
     this.links = routes.map((routeName, i)=>{
+      console.warn('location',window.location)
       return (
-        <Link key={i} style={{marginRight: 16}} class="nav-link" to={'/'+routeName}>
-          {routeName}
-        </Link>
+        <NavLink
+          key={i}
+          style={{
+            marginRight: 24,
+            textDecoration: 'none',
+            color:'rgba(0,0,0,.75)',
+            fontSize: 20
+          }}
+          activeStyle={{
+            color: 'rgba(0,0,0,.85)',
+            fontWeight: 'bold',
+          }}
+          class="nav-link"
+          to={'/'+routeName}
+        >
+          {Routes[routeName][0]}
+        </NavLink>
       )
     })
 
@@ -50,11 +73,27 @@ class App extends Component {
     return (
       <Router>
         <div style={{}}>
-          <div>
+          <div style={{
+            height: 50,
+            display: 'flex',
+            alignItems:'center',
+            zIndex: 10,
+            position: 'relative',
+            // position: 'fixed',
+            // top:0,
+            // left:0,
+            // right:0,
+            paddingLeft: 24,
+            backgroundColor:'white',
+            borderBottomWidth: 1,
+            borderColor:'#ddd',
+            borderBottomStyle: 'solid'
+          }}>
             { this.links }
           </div>
           <div style={{backgroundColor:'#eee',minHeight:800}}>
             { this.routesroutes }
+            <Redirect from='/' to={this.firstRoute}/>
           </div>
         </div>
       </Router>
