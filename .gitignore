@@ -6,3 +6,5 @@
 /package-lock.json
 /tmp
 yarn.lock
+.DS_Store
+.cache
