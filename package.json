@@ -1,11 +1,11 @@
 {
-  "name": "react-component",
-  "version": "0.0.0",
+  "name": "react-component-docs",
+  "version": "0.0.1",
   "author": "han4wluc @han4wluc",
   "bin": {
-    "react-component": "./bin/run"
+    "react-component-docs": "./bin/run"
   },
-  "bugs": "https://github.com/han4wluc/react-component/issues",
+  "bugs": "https://github.com/han4wluc/react-component-docs/issues",
   "dependencies": {
     "@oclif/command": "^1.4.7",
     "@oclif/config": "^1.3.63",
@@ -54,16 +54,16 @@
     "/bin",
     "/lib"
   ],
-  "homepage": "https://github.com/han4wluc/react-component",
+  "homepage": "https://github.com/han4wluc/react-component-docs",
   "keywords": [
     "oclif"
   ],
   "license": "MIT",
   "main": "lib/index.js",
   "oclif": {
-    "bin": "react-component"
+    "bin": "react-component-docs"
   },
-  "repository": "han4wluc/react-component",
+  "repository": "han4wluc/react-component-docs",
   "scripts": {
     "build": "rm -rf lib && tsc",
     "lint": "tsc -p test --noEmit && tslint -p test -t stylish",
