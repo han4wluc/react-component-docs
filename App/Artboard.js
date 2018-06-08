@@ -5,12 +5,12 @@ class Artboard extends React.Component {
   render() {
     const { name, children, style, deprecated, id } = this.props;
 
-    const textStyle = {};
+    const textStyle = {fontWeight:'bold',fontSize:16};
     if(deprecated){
       textStyle.textDecoration = 'line-through';
     }
     return (
-      <View style={{ marginTop: 16 }} id={id}>
+      <View style={{ marginTop: 48 }} id={id}>
         <Text style={textStyle}>{name}</Text>
         <View style={[styles.content,style]}>{children}</View>
       </View>
@@ -27,11 +27,6 @@ Artboard.propTypes = {
 
 const styles = {
   content: {
-    borderWidth: 1,
-    borderColor: 'white',
-    borderStyle: 'solid',
-    justfyContent:'center',
-    // alignItems:'center'
   }
 }
 

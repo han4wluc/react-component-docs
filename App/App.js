@@ -97,7 +97,7 @@ class App extends Component {
           }}>
             { this.links }
           </div>
-          <div style={{backgroundColor:'#eee',minHeight:800}}>
+          <div style={{backgroundColor:'#fafafa',minHeight:800}}>
             { this.routesroutes }
             <Redirect from='/' to={this.firstRoute}/>
           </div>

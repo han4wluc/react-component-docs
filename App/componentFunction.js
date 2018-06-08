@@ -32,9 +32,9 @@ export default (name, cc) => {
         }
         return c.fileName.toLowerCase().startsWith(search.toLowerCase());
       }).map(c => {
-        const variations = c.component.propExamples.map(variation => {
+        const variations = c.component.propExamples.map((variation, index) => {
           return (
-            <View>
+            <View style={{marginBottom: index !== c.component.propExamples.length - 1 ? 16 : 0}}>
               {!!variation.description && (
                 <Text
                   style={styles.description}
@@ -51,7 +51,7 @@ export default (name, cc) => {
           <Artboard
             deprecated={c.component.deprecated}
             name={c.fileName}
-            style={{ paddingVertical: 16 }}
+            // style={{}}
             id={c.fileName}
           >
             {variations}
@@ -101,7 +101,7 @@ export default (name, cc) => {
               currentScollId: a.id
             })
           }}>
-            <View id={'top-menu'} style={{backgroundColor:'white',position:'fixed',left:0,width:300,bottom:0,top:0,paddingTop:24,paddingBottom:24,marginTop:0,overflow:'scroll',zIndex: -1}}>
+            <View id={'top-menu'} style={{backgroundColor:'white',position:'fixed',left:0,width:300,bottom:0,top:0,paddingTop:24,paddingBottom:24,marginTop:0,overflow:'scroll',zIndex: -1,borderRightWidth:1,borderColor:'#ddd',borderStyle:'solid'}}>
               
               <View style={{width:300-48,marginLeft: 24, height:1,backgroundColor:'#ccc',marginTop:8,marginBottom:8}}/>
 
@@ -110,7 +110,7 @@ export default (name, cc) => {
             </View>
           </Scrollspy>
 
-          <View style={{flex:1,marginLeft: 340,marginRight:40}}>
+          <View style={{flex:1,marginLeft: 300,marginRight:40}}>
             <Text size={'title_1'} style={styles.title}>
               {name}
             </Text>
@@ -121,67 +121,6 @@ export default (name, cc) => {
     }
   }
 } 
-
-
-// var lastId,
-//     topMenu = $("#top-menu"),
-//     topMenuHeight = topMenu.outerHeight()+15,
-//     // All list items
-//     menuItems = topMenu.find("a"),
-//     // Anchors corresponding to menu items
-//     scrollItems = menuItems.map(function(){
-//       var item = $($(this).attr("href"));
-//       if (item.length) { return item; }
-//     });
-
-// function getVisible( $els ) {
-//     var docViewTop = $(window).scrollTop();
-//     var docViewBottom = docViewTop + $(window).height();
-
-//     return $els.filter(function(i, elem) {
-//         var elemTop = $(elem).offset().top;
-//         var elemBottom = elemTop + $(elem).height();
-
-//         // Fully or partially visible, pick one
-
-//         // element is _fully_ visible
-//         return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-
-//         // element is _partially_ visible
-//         return ((elemBottom <= docViewBottom) || (elemTop >= docViewTop));
-//     });
-// }
-
-// // Bind to scroll
-// $(window).scroll(function(){
-//    // Get container scroll position
-//    var fromTop = $(this).scrollTop();
-
-//    // console.warn('scrollItems', scrollItems);
-   
-//    // Get id of current scroll item
-//    var cur = scrollItems.map(function(){
-//      if ($(this).offset().top < fromTop)
-//        return this;
-//    });
-//    // Get the id of the current element
-//    cur = cur[cur.length-1];
-//    var id = cur && cur.length ? cur[0].id : "";
-// // 
-//    // console.warn(id);
-
-//    const visible = getVisible(scrollItems)
-   
-//    console.warn(visible);
-//    // if (lastId !== id) {
-//    //     lastId = id;
-//    //     // Set/remove active class
-//    //     menuItems
-//    //       .parent().removeClass("active")
-//    //       .end().filter("[href='#"+id+"']").parent().addClass("active");
-//    // }                   
-// });
-
 
 const styles = {
   container: {
@@ -194,12 +133,12 @@ const styles = {
   title: {
     marginTop: 48,
     marginBottom: 48,
-    fontSize: 36
+    fontSize: 36,
     // textAlign: 'center',
     // alignSelf: 'center',
   },
   description: {
-    textAlign: 'center',
+    // textAlign: 'center',
     marginTop: 24,
     marginBottom: 12,
     color: '#555',
