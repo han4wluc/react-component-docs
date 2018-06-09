@@ -9,9 +9,15 @@ You need to have typescript installed in order to compile
 `npm install -g typescript`
 
 `git clone https://github.com/han4wluc/react-component-docs.git`
+
 `cd react-component-docs`
+
 `tsc`
+
 `npm link`
+
 `cd example`
+
 `react-component-docs`
+
 Open your browser at `http://localhost:8080/webpack-dev-server/`
